@@ -8,8 +8,8 @@ from matrix.matrix import get_cosine_mat
 import argparse
 
 parser = argparse.ArgumentParser()
-parser.add_argument('interactions_link', type=int)
-parser.add_argument('movies_md_link', type=int)
+parser.add_argument('interactions_link', type=str)
+parser.add_argument('movies_md_link', type=str)
 parser.add_argument('movies_rd_link', type=str)
 parser.add_argument('movies_rd_upd_link', type=str)
 parser.add_argument('int_coef_link', type=str)
@@ -29,7 +29,7 @@ int_coef_link = 'data/int_coef.parquet'
 movies_md_upd_link = 'data/movies_md_upd.parquet'
 interactions_upd_link = 'data/interactions_upd.parquet'
 cos_sim_md_link = 'matrix/cos_sim_md.pkl'
-cos_sim_desc_link = 'matrix/cos_sim_desc.pkl
+cos_sim_desc_link = 'matrix/cos_sim_desc.pkl'
 '''
 
 interactions = get_data_parquet(args.interactions_link)
