@@ -1,0 +1,16 @@
+[PATH]
+movies_md = './data/movies_metdata.parquet'
+interactions = './data/interactions.parquet'
+model = './model/conf/model.pkl'
+
+[VARIABLES]
+columns_list = ['genres','actors','director','country']
+date= date_columns_list['day','month','year']
+
+[PARAMS]
+NO_COMPONENTS = 64
+LEARNING_RATE = .03
+LOSS = 'warp'
+MAX_SAMPLED = 5
+RANDOM_STATE = 42
+EPOCHS = 20
