@@ -1,7 +1,8 @@
 import pandas as pd
 import numpy as np
-from conf.conf import logging
+from conf.conf import logging,settings
 from conf.conf import dataset
+from tqdm import tqdm
 
 def compute_popularity(df: pd.DataFrame, item_id: str, max_candidates: int):
     """
@@ -24,7 +25,7 @@ def get_lightfm_mapping(dataset,df:pd.DataFrame):
     lightfm_mapping['users_inv_mapping'] = {v: k for k, v in lightfm_mapping['users_mapping'].items()}
     lightfm_mapping['items_inv_mapping'] = {v: k for k, v in lightfm_mapping['items_mapping'].items()}
 
-    return lightfm_mapping
+    return dataset,lightfm_mapping
 
 def get_item_name_mapper(df):
     item_name_mapper = dict(zip(df['movie_id'], df['title']))
@@ -37,3 +38,16 @@ def df_to_tuple_iterator(df: pd.DataFrame):
     returns iterator
     '''
     return zip(*df.values.T)
+
+def get_train_mat_and_weights(dataset,local_train):
+    train_mat, train_mat_weights = dataset.build_interactions(df_to_tuple_iterator(local_train[['user_id', 'movie_id']]))
+    return train_mat, train_mat_weights
+
+def model_fit_patial(model,train_mat,EPOCHS = settings.PARAMS.EPOCHS):
+    for _ in tqdm(range(EPOCHS), total = EPOCHS):
+            model.fit_partial(
+            train_mat,
+            num_threads = 4
+        )
+            
+    return model

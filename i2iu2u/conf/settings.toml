@@ -7,7 +7,9 @@ columns_list = ['genres','actors','director','country']
 date= date_columns_list['day','month','year']
 
 [PARAMS]
-MAX_DATE = interactions['last_watch_dt'].max()
-MIN_DATE = interactions['last_watch_dt'].min()
-TEST_INTERVAL_DAYS = 14
-TEST_MAX_DATE = MAX_DATE - dt.timedelta(days = TEST_INTERVAL_DAYS)
+NO_COMPONENTS = 64
+LEARNING_RATE = .03
+LOSS = 'warp'
+MAX_SAMPLED = 5
+RANDOM_STATE = 42
+EPOCHS = 20
