@@ -185,7 +185,7 @@ def get_x_y_split(cbm_train_set,cbm_test_set,ID_COLS,DROP_COLS,TARGET):
     return X_train, y_train,X_test, y_test
 
 def get_cbm(X_train, y_train,X_test, y_test):
-    X_train=X_train.drop('watch_duration_minutes',axis=1)
+    
     cbm_classifier = CatBoostClassifier(
     loss_function = 'CrossEntropy',
     iterations = 5000,
@@ -236,7 +236,6 @@ def get_global_cbm_test_preds(local_train,top_k,lightf_mapping,movies_metadata,I
     return global_test_predictions,cbm_global_test
 
 def get_global_ranks(cbm_global_test,cbm,X_train):
-    cbm_global_test = cbm_global_test.drop('watch_duration_minutes')
     cbm_global_test['cbm_preds'] = cbm.predict_proba(cbm_global_test[X_train.columns])[:, 1]
     cbm_global_test = cbm_global_test.sort_values(by = ['user_id', 'cbm_preds'], ascending = [True, False])
     cbm_global_test['cbm_rank'] = cbm_global_test.groupby('user_id').cumcount() + 1
@@ -347,7 +346,7 @@ cbm_train_set,cbm_test_set = get_cbm_train_test_set(positive_preds,negative_pred
 
 ID_COLS = ['user_id', 'movie_id']
 TARGET = ['target']
-DROP_COLS = ['item_name', 'year', 'month', 'day','last_watch_dt']
+DROP_COLS = ['item_name', 'year', 'month', 'day','last_watch_dt','watch_duration_minutes']
 
 X_train, y_train,X_test, y_test = get_x_y_split(cbm_train_set,cbm_test_set,ID_COLS,DROP_COLS,TARGET)
 
