@@ -5,7 +5,7 @@ model = './model/conf/model.pkl'
 
 [VARIABLES]
 columns_list = ['genres','actors','director','country']
-date= date_columns_list['day','month','year']
+date_columns_list = date_columns_list['day','month','year']
 
 [PARAMS]
 NO_COMPONENTS = 64

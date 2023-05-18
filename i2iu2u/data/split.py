@@ -23,9 +23,10 @@ def get_global_train_test(df:pd.DataFrame,column:str,TEST_MAX_DATE:dt.timedelta)
     return global_test,global_train
 
 def get_local_train_test(global_train:pd.DataFrame,column:str):
-    local_train_thresh = global_train['last_watch_dt'].quantile(q = .7, interpolation = 'nearest')
-    local_train = global_train.loc[global_train['last_watch_dt'] < local_train_thresh]
-    local_test = global_train.loc[global_train['last_watch_dt'] >= local_train_thresh]
+    local_train_thresh = global_train[column].quantile(q = .7, interpolation = 'nearest')
+    local_train = global_train.loc[global_train[column] < local_train_thresh]
+    local_test = global_train.loc[global_train[column] >= local_train_thresh]
+    local_test = local_test.loc[local_test['user_id'].isin(local_train['user_id'].unique())]
     return local_train,local_test
 
     
