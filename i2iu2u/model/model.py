@@ -9,6 +9,9 @@ from lightfm import LightFM
 from data.data import get_data_parquet
 from data.split import  get_test_max_date,get_global_train_test,get_local_train_test
 from data.update_data import get_last_watch_dt
+from sklearn.model_selection import train_test_split
+from sklearn.utils import shuffle
+
 
 
 
@@ -108,6 +111,67 @@ def generate_lightfm_recs_mapper(
     return _recs_mapper
 
 
+
+def get_local_preds(local_test,lightf_mapping,lfm_model,item_name_mapper):
+    local_test_preds = pd.DataFrame({'user_id': local_test['user_id'].unique()})
+    all_cols = list(lightf_mapping['items_mapping'].values())
+    mapper = generate_lightfm_recs_mapper(
+    lfm_model, 
+    item_ids = all_cols, 
+    known_items = dict(),
+    N = 10,
+    user_features = None, 
+    item_features = None, 
+    user_mapping = lightf_mapping['users_mapping'],
+    item_inv_mapping = lightf_mapping['items_inv_mapping'],
+    num_threads = 20)
+    local_test_preds['movie_id'] = local_test_preds['user_id'].map(mapper)
+    local_test_preds = local_test_preds.explode('movie_id')
+    local_test_preds['rank'] = local_test_preds.groupby('user_id').cumcount() + 1 
+    local_test_preds['item_name'] = local_test_preds['movie_id'].map(item_name_mapper)
+    print(f'Data shape{local_test_preds.shape}')
+    local_test_preds.head(50)
+    return local_test_preds
+
+
+def get_positive_negative_preds(local_test_preds, local_test):
+    positive_preds = pd.merge(local_test_preds, local_test, how = 'inner', on = ['user_id', 'movie_id'])
+    positive_preds['target'] = 1
+    negative_preds = pd.merge(local_test_preds, local_test, how = 'left', on = ['user_id', 'movie_id'])
+    negative_preds = negative_preds.loc[negative_preds['rating'].isnull()].sample(frac = .2)
+    negative_preds['target'] = 0
+    return positive_preds,negative_preds
+
+def get_train_test_users(local_test):
+    train_users, test_users = train_test_split(
+    local_test['user_id'].unique(),
+    test_size = .2,
+    random_state = 13
+    )
+    return train_users, test_users
+
+def get_cbm_train_test_set(positive_preds,negative_preds,train_users,test_users):
+    cbm_train_set = shuffle(
+    pd.concat(
+    [positive_preds.loc[positive_preds['user_id'].isin(train_users)],
+    negative_preds.loc[negative_preds['user_id'].isin(train_users)]]
+    )
+)
+    cbm_test_set = shuffle(
+    pd.concat(
+    [positive_preds.loc[positive_preds['user_id'].isin(test_users)],
+    negative_preds.loc[negative_preds['user_id'].isin(test_users)]]
+    )
+)
+    return cbm_train_set,cbm_test_set
+    
+    
+    
+
+    
+    
+
+
 # nakonets to ne ebanii functions
 interactions = get_data_parquet('data/interactions.parquet')
 movies_md = get_data_parquet('data/movies_metdata.parquet')
@@ -139,6 +203,20 @@ lfm_model = LightFM(
 lfm_model = model_fit_partial(lfm_model, train_mat)
 
 save_model('model/model.pkl',lfm_model)
+
+all_cols = list(lightf_mapping['items_mapping'].values())
+
+mapper = generate_lightfm_recs_mapper(
+    lfm_model, 
+    item_ids = all_cols, 
+    known_items = dict(),
+    N = 10,
+    user_features = None, 
+    item_features = None, 
+    user_mapping = lightf_mapping['users_mapping'],
+    item_inv_mapping = lightf_mapping['items_inv_mapping'],
+    num_threads = 20
+)
 
 
 
