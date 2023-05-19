@@ -1,11 +1,15 @@
 import pandas as pd
 import datetime as dt
 from conf.conf import logging,settings
+<<<<<<< HEAD
 from data.data import save_data_csv
 from sklearn.model_selection import train_test_split
 from sklearn.utils import shuffle
 import warnings
 warnings.filterwarnings('ignore')
+=======
+
+>>>>>>> 9596f3448f3d2d7f6ca4650b3c1f4dc77fd4902f
 
 def get_test_max_date(df:pd.DataFrame,column:str,test_interval_days=14):
     MAX_DATE = df[column].max()
@@ -17,15 +21,20 @@ def get_test_max_date(df:pd.DataFrame,column:str,test_interval_days=14):
     
 
 
+<<<<<<< HEAD
 def get_global_train_test(df:pd.DataFrame,column:str,TEST_MAX_DATE:dt.timedelta,train_path=settings.PATH.global_train,test_path=settings.PATH.global_test):
     
     logging.info('spliting dfs')
+=======
+def get_global_train_test(df:pd.DataFrame,column:str,TEST_MAX_DATE:dt.timedelta):
+>>>>>>> 9596f3448f3d2d7f6ca4650b3c1f4dc77fd4902f
     
     global_train = df.loc[df[column] < TEST_MAX_DATE]
     global_test = df.loc[df[column] >= TEST_MAX_DATE]
 
     global_train = global_train.dropna().reset_index(drop = True)
     
+<<<<<<< HEAD
     logging.info('split is ready')
     
     save_data_csv(train_path,global_train)
@@ -37,10 +46,16 @@ def get_local_train_test(global_train:pd.DataFrame,column:str,train_path=setting
     
     logging.info('spliting dfs')
     
+=======
+    return global_test,global_train
+
+def get_local_train_test(global_train:pd.DataFrame,column:str):
+>>>>>>> 9596f3448f3d2d7f6ca4650b3c1f4dc77fd4902f
     local_train_thresh = global_train[column].quantile(q = .7, interpolation = 'nearest')
     local_train = global_train.loc[global_train[column] < local_train_thresh]
     local_test = global_train.loc[global_train[column] >= local_train_thresh]
     local_test = local_test.loc[local_test['user_id'].isin(local_train['user_id'].unique())]
+<<<<<<< HEAD
     
     logging.info('split is ready')
     
@@ -110,3 +125,8 @@ def get_x_y_split(cbm_train_set,cbm_test_set,ID_COLS=settings.VARIABLES.ID_COLS,
     X_test = X_test.fillna(X_test.mode().iloc[0])
     logging.info('split is ready')
     return X_train, y_train,X_test, y_test
+=======
+    return local_train,local_test
+
+    
+>>>>>>> 9596f3448f3d2d7f6ca4650b3c1f4dc77fd4902f

@@ -1,8 +1,11 @@
 import numpy as np
 import pandas as pd
 from conf.conf import logging
+<<<<<<< HEAD
 import warnings
 warnings.filterwarnings('ignore')
+=======
+>>>>>>> 9596f3448f3d2d7f6ca4650b3c1f4dc77fd4902f
 
 def get_rating(movies_md: pd.DataFrame,interactions: pd.DataFrame)-> pd.DataFrame:
     """

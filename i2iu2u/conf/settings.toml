@@ -2,6 +2,7 @@
 movies_md = './data/movies_metdata.parquet'
 interactions = './data/interactions.parquet'
 model = './model/conf/model.pkl'
+<<<<<<< HEAD
 global_train = 'data/cache_data/global_train.csv'
 global_test= 'data/cache_data/global_test.csv'
 local_train = 'data/cache_data/local_train.csv'
@@ -25,6 +26,16 @@ DROP_COLS = ['item_name', 'year', 'month', 'day','last_watch_dt','watch_duration
 [PARAMS]
 NO_COMPONENTS = 64
 LEARNING_RATE = 0.03
+=======
+
+[VARIABLES]
+columns_list = ['genres','actors','director','country']
+date_columns_list = date_columns_list['day','month','year']
+
+[PARAMS]
+NO_COMPONENTS = 64
+LEARNING_RATE = .03
+>>>>>>> 9596f3448f3d2d7f6ca4650b3c1f4dc77fd4902f
 LOSS = 'warp'
 MAX_SAMPLED = 5
 RANDOM_STATE = 42

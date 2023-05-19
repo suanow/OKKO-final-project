@@ -1,4 +1,5 @@
 [VARIABLES]
+<<<<<<< HEAD
 columns_list = ['genres','actors','director','country']
 
 [PATH]
@@ -11,3 +12,6 @@ movies_md_upd_link = 'data/movies_md_upd.parquet'
 interactions_upd_link = 'data/interactions_upd.parquet'
 cos_sim_md_link = 'matrix/cos_sim_md.pkl'
 cos_sim_desc_link = 'matrix/cos_sim_desc.pkl'
+=======
+columns_list = ['genres','actors','director','country']
+>>>>>>> 9596f3448f3d2d7f6ca4650b3c1f4dc77fd4902f

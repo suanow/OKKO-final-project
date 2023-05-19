@@ -15,3 +15,4 @@ def get_pred_i2i(user_id,top_n):
     print(pred)
     pred_link = 'pred/pred('+str(user_id)+').csv'
     save_data_csv(pred_link,pred)
+
