@@ -1,0 +1,31 @@
+[PATH]
+movies_md = './data/movies_metdata.parquet'
+interactions = './data/interactions.parquet'
+model = './model/conf/model.pkl'
+global_train = 'data/cache_data/global_train.csv'
+global_test= 'data/cache_data/global_test.csv'
+local_train = 'data/cache_data/local_train.csv'
+local_test= 'data/cache_data/local_test.csv'
+local_test_preds = 'data/cache_data/local_test_preds.csv'
+positive_preds = 'data/cache_data/positive_preds.csv'
+negative_preds = 'data/cache_data/negative_preds.csv'
+cbm_train_set = 'data/cache_data/cbm_train_set.csv'
+cbm_test_set = 'data/cache_data/cbm_test_set.csv'
+cbm_global_test = 'data/cbm_global_test.csv'
+
+
+[VARIABLES]
+columns_list = ['genres','actors','director','country']
+date_columns_list = ['day','month','year']
+ITEM_FEATURES = ['age_rating','duration','num_users_watched','time_watched','avg_watch_coef','rating','score']
+ID_COLS = ['user_id', 'movie_id']
+TARGET = ['target']
+DROP_COLS = ['item_name', 'year', 'month', 'day','last_watch_dt','watch_duration_minutes']
+
+[PARAMS]
+NO_COMPONENTS = 64
+LEARNING_RATE = 0.03
+LOSS = 'warp'
+MAX_SAMPLED = 5
+RANDOM_STATE = 42
+EPOCHS = 20

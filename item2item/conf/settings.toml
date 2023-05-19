@@ -1,0 +1,13 @@
+[VARIABLES]
+columns_list = ['genres','actors','director','country']
+
+[PATH]
+interactions_link = 'data/interactions.parquet'
+movies_md_link = 'data/movies_metdata.parquet'
+movies_rd_link = 'data/Movies_r_d.xlsx'
+movies_rd_upd_link = 'data/movies_rd.parquet'
+int_coef_link = 'data/int_coef.parquet'
+movies_md_upd_link = 'data/movies_md_upd.parquet'
+interactions_upd_link = 'data/interactions_upd.parquet'
+cos_sim_md_link = 'matrix/cos_sim_md.pkl'
+cos_sim_desc_link = 'matrix/cos_sim_desc.pkl'
