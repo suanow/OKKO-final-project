@@ -1,6 +1,6 @@
 import pickle
-from i2iu2u.conf.conf import logging,settings
-from i2iu2u.data.data import get_data_csv
+from conf.conf import logging,settings
+from data.data import get_data_csv
 
 def save_model(dir: str, model) -> None:
     """

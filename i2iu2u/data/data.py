@@ -1,12 +1,8 @@
-import pandas as pd
-<<<<<<< HEAD
-from i2iu2u.conf.conf import logging
 import warnings
 warnings.filterwarnings('ignore')
-=======
+import pandas as pd
 from conf.conf import logging
 
->>>>>>> 9596f3448f3d2d7f6ca4650b3c1f4dc77fd4902f
 
 def get_data_parquet(link:str) -> pd.DataFrame:
     """ 
@@ -18,25 +14,23 @@ def get_data_parquet(link:str) -> pd.DataFrame:
     
     return df
 
-<<<<<<< HEAD
-def get_data_csv(link:str) -> pd.DataFrame:
-    """ 
-    Getting table from parquet 
-    """
-    logging.info('Extracting DataFrame')
-    df = pd.read_csv(link)
-    logging.info('DataFrame is extracted')
-    
-    return df
-
-=======
->>>>>>> 9596f3448f3d2d7f6ca4650b3c1f4dc77fd4902f
 def get_data_xslx(link:str) -> pd.DataFrame:
     """ 
     Getting table from xslx 
     """
     logging.info('Extracting DataFrame')
     df = pd.read_excel(link)
+    logging.info('DataFrame is extracted')
+    
+    return df
+
+
+def get_data_csv(link:str) -> pd.DataFrame:
+    """ 
+    Getting table from xslx 
+    """
+    logging.info('Extracting DataFrame')
+    df = pd.read_csv(link)
     logging.info('DataFrame is extracted')
     
     return df

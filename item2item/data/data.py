@@ -1,9 +1,5 @@
 import pandas as pd
-<<<<<<< HEAD
 from item2item.conf.conf import logging
-=======
-from conf.conf import logging
->>>>>>> 9596f3448f3d2d7f6ca4650b3c1f4dc77fd4902f
 
 
 def get_data_parquet(link:str) -> pd.DataFrame:
@@ -12,6 +8,16 @@ def get_data_parquet(link:str) -> pd.DataFrame:
     """
     logging.info('Extracting DataFrame')
     df = pd.read_parquet(link, engine='pyarrow')
+    logging.info('DataFrame is extracted')
+    
+    return df
+
+def gget_data_csv(link:str) -> pd.DataFrame:
+    """ 
+    Getting table from xslx 
+    """
+    logging.info('Extracting DataFrame')
+    df = pd.read_csv(link)
     logging.info('DataFrame is extracted')
     
     return df
